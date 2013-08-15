@@ -7,6 +7,10 @@
 
 library(RWeka)
 
+# x - should be text, sentense
+# n - n-gramm
+# skip - number of skips
+
 kSkipNgram <- function(x, n=1, skip=0)
   {
   ngram <- NULL
