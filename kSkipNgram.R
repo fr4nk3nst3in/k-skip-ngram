@@ -5,20 +5,31 @@
 # http://www.gnu.org/licenses/gpl.html                                                  #
 #########################################################################################
 
-library(RWeka)
 
 # x - should be text, sentense
 # n - n-gramm
 # skip - number of skips
+
+# x as text
+tokenizer <- function(x)
+{
+  # if non character object
+  if (!is.character(x)) 
+    stop("'x' not a character")
+  
+  # split string with given regular expresion
+  x <- unlist(strsplit(x, "[[:space:]|[:blank:][:punct:][:space:]|[:blank:]]"))
+  
+  # return tokens
+  return(unlist(lapply(x , function(x) if(nchar(x)>0) return(x))))
+}
 
 kSkipNgram <- function(x, n=1, skip=0)
   {
   ngram <- NULL
   n <- n-1
   skip <- skip +1
-  # WEKA Tokenizer 
-  Tokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 1, max = 1))
-  x <- Tokenizer(x)
+  x <- tokenizer(x)
   for(i in 1:length(x))
     {
       if (i <= length(x)-n)
